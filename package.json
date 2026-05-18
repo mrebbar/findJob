@@ -1,0 +1,25 @@
+{
+  "name": "telegram-monitor-bot",
+  "version": "1.0.0",
+  "description": "Telegram channels monitoring bot based on keywords using grammY and GramJS",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "userbot",
+    "monitor",
+    "grammy",
+    "gramjs"
+  ],
+  "author": "Ixlosbek Erkinov",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "grammy": "^1.38.2",
+    "telegram": "^2.26.22"
+  }
+}
