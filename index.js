@@ -9,7 +9,7 @@ const apiHash = process.env.API_HASH
 const stringSession = new StringSession(process.env.SESSION);
 
 const config = JSON.parse(fs.readFileSync("config.json", "utf8"))
-const outputChannel = "@ixlosbekmonitoring";
+const outputChannel = "@Mrebbar01";
 
 (async () => {
     console.log(">>> Boshlayapmiz...");

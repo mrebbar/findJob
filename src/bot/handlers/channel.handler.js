@@ -5,17 +5,17 @@ async function handleListChannels(ctx) {
         return ctx.reply("📭 Hali birorta ham kanal qo‘shilmagan.");
     }
 
-    const list = channels.map((ch, i) => `${i + 1}. ${ch}`).join("\n");
-    await ctx.reply(`📋 **Kuzatilayotgan kanallar ro‘yxati:**\n\n${list}`, {parse_mode: "Markdown"});
+    const list = channels.map((ch, i) => `${i + 1}. \`${ch}\``).join("\n");
+    await ctx.reply(`📋 **Kuzatilayotgan kanallar ro‘yxati:**\n\n${list}`, { parse_mode: "Markdown" });
 }
 async function handleAddChannelStart(ctx) {
     ctx.session.step = "wait_channel_add";
-    await ctx.reply("Qo‘shmoqchi bo‘lgan kanalingiz usernamesini kiriting (masalan: `@ixlosware`):");
+    await ctx.reply("Qo‘shmoqchi bo‘lgan kanalingiz usernamesini kiriting (masalan: `@charfor21`):");
 }
 
 async function handleRemoveChannelStart(ctx) {
     ctx.session.step = "wait_channel_remove";
-    await ctx.reply("Ochirmoqchi bo‘lgan kanalingiz usernamesini kiriting (masalan: `@ixlosware`):");
+    await ctx.reply("Ochirmoqchi bo‘lgan kanalingiz usernamesini kiriting (masalan: `@charfor21`):");
 }
 
 async function handleChannelText(ctx, text) {

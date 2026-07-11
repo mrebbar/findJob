@@ -3,6 +3,7 @@ require("dotenv").config();
 const storageService = require("./services/storage.service");
 const bot = require("./bot");
 const {startUserBot} = require("./userbot");
+const {startHhScanner} = require("./services/hh.scanner");
 
 (async () => {
     try {
@@ -15,6 +16,7 @@ const {startUserBot} = require("./userbot");
             }
         });
         await startUserBot();
+        startHhScanner();
 
         console.log("Monitoring tizimi to‘liq rejimda ishlamoqda");
 

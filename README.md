@@ -23,7 +23,7 @@ yozilgan.
 
 ```bash
 # Loyihani yuklab oling
-git clone https://github.com/ixlosbek/telegram-monitor.git
+git clone https://github.com/mrebbar/telegram-monitor.git
 cd telegram-monitor
 
 # Paketlarni o'rnatish
@@ -287,7 +287,7 @@ sudo apt install -y nodejs
 
 # 3. Loyihani yuklab olish
 cd /opt
-git clone https://github.com/ixlosbek/telegram-monitor.git
+git clone https://github.com/mrebbar/telegram-monitor.git
 cd telegram-monitor
 npm install
 
@@ -374,8 +374,8 @@ git push origin feature/amazing-feature
 |------------------------|--------------------------------------|
 |
 | 
-| **Telegram**           | [@ixlos_aka](https://t.me/ixlos_aka) |
-| **Email**              | me@ixlosbek.uz                       |
+| **Telegram**           | [@mrebbar01](https://t.me/mrebbar01) |
+| **Email**              | mrebbar01@gmail.com                       |
 
 ---
 
@@ -406,6 +406,5 @@ git push origin feature/amazing-feature
 ```
 
 
-**Muallif:** [Ixlosbek Erkinov](https://github.com/ix1osbek)  
 **Tahrir**: 2026 
 **Status:** 🟢 Aktiv Development

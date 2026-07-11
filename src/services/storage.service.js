@@ -14,11 +14,12 @@ class StorageService {
             if (!this.config.channels) this.config.channels = [];
             if (!this.config.keywords) this.config.keywords = [];
             if (!this.config.lastMessageIds) this.config.lastMessageIds = {};
+            if (!this.config.scannedHhIds) this.config.scannedHhIds = [];
 
             return this.config;
         } catch (error) {
             console.error("Config fayl oqishda xatolik:", error.message);
-            return {channels: [], keywords: [], lastMessageIds: {}};
+            return {channels: [], keywords: [], lastMessageIds: {}, scannedHhIds: []};
         }
     }
     async saveConfig() {
@@ -86,6 +87,22 @@ class StorageService {
         if (!this.config) await this.loadConfig();
         this.config.lastMessageIds[channel] = messageId;
         await this.saveConfig();
+    }
+
+    async isHhIdScanned(id) {
+        if (!this.config) await this.loadConfig();
+        return this.config.scannedHhIds.includes(String(id));
+    }
+
+    async saveScannedHhId(id) {
+        if (!this.config) await this.loadConfig();
+        if (!this.config.scannedHhIds.includes(String(id))) {
+            this.config.scannedHhIds.push(String(id));
+            if (this.config.scannedHhIds.length > 500) {
+                this.config.scannedHhIds.shift();
+            }
+            await this.saveConfig();
+        }
     }
 }
 module.exports = new StorageService();
