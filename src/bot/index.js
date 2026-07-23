@@ -66,8 +66,34 @@ async function startBot(options = {}) {
         await bot.start(options);
     } catch (error) {
         global[STARTED] = false;
+        
+        // Telegram 409 xatosi uchun maxsus boshqarish
+        if (error?.error_code === 409 || error?.message?.includes("409")) {
+            console.error("\n⚠️  Telegram getupdates konflikt:\n");
+            console.error("Ushbu xato ehtimol boshqa bot instansiyasi hali ham polling qilayotgani uchun yuz beradi.\n");
+            console.error("Yechim:");
+            console.error("1. Barcha node proceslarini to'xtating: pkill -9 -f 'node.*src/index'");
+            console.error("2. 2-3 soniya kuting (Telegramga eski session timeout bo'lsin)");
+            console.error("3. Qayta ishga tushiring: npm start\n");
+        }
+        
         throw error;
     }
+
+    // Graceful shutdown
+    process.on("SIGINT", async () => {
+        console.log("\n>>> Bot to'xtatilmoqda...");
+        await bot.stop();
+        global[STARTED] = false;
+        process.exit(0);
+    });
+
+    process.on("SIGTERM", async () => {
+        console.log("\n>>> Bot to'xtatilmoqda...");
+        await bot.stop();
+        global[STARTED] = false;
+        process.exit(0);
+    });
 }
 
 module.exports = { bot, startBot };
