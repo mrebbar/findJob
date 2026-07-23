@@ -47,4 +47,8 @@ bot.on("message:text", async (ctx) => {
         await keywordHandler.handleKeywordText(ctx, text);
     }
 });
+
+// Webhook middleware
+bot.use(session({initial: () => ({})}));
+
 module.exports = bot;

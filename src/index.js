@@ -4,17 +4,30 @@ const storageService = require("./services/storage.service");
 const bot = require("./bot");
 const {startUserBot} = require("./userbot");
 const {startHhScanner} = require("./services/hh.scanner");
+const {startWebhook} = require("./webhook");
+
+const USE_WEBHOOK = process.env.USE_WEBHOOK === "true";
 
 (async () => {
     try {
         console.log("Tizim ishga tushmoqda...");
         await storageService.loadConfig();
         console.log("Ma'lumotlar bazasi (Config) yuklandi.");
-        bot.start({
-            onStart: (botInfo) => {
-                console.log(`Asosiy boshqaruv boti ishga tushdi! (@${botInfo.username})`);
-            }
-        });
+
+        if (USE_WEBHOOK) {
+            // Webhook rejimi
+            console.log(">>> Webhook rejimida ishga tushilmoqda...");
+            await startWebhook();
+        } else {
+            // Polling rejimi (default)
+            console.log(">>> Polling rejimida ishga tushilmoqda...");
+            bot.start({
+                onStart: (botInfo) => {
+                    console.log(`Asosiy boshqaruv boti ishga tushdi! (@${botInfo.username})`);
+                }
+            });
+        }
+
         await startUserBot();
         startHhScanner();
 
