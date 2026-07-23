@@ -1,11 +1,11 @@
 const http = require("http");
 const bot = require("./bot");
 
-const PORT = Number(process.env.PORT || 8080);
 const WEBHOOK_URL = process.env.WEBHOOK_URL; // https://yourdomain.com
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || "secret-key";
 
 function createServer({ useWebhook = false } = {}) {
+    const port = Number(process.env.PORT || 8080);
     const secretPath = `/bot${WEBHOOK_SECRET}`;
 
     const server = http.createServer(async (req, res) => {
@@ -42,8 +42,8 @@ function createServer({ useWebhook = false } = {}) {
     });
 
     return new Promise((resolve, reject) => {
-        server.listen(PORT, "0.0.0.0", () => {
-            console.log(`>>> Server portda ishlamoqda: ${PORT}`);
+        server.listen(port, "0.0.0.0", () => {
+            console.log(`>>> Server portda ishlamoqda: ${port}`);
             resolve(server);
         });
         server.on("error", reject);

@@ -27,7 +27,12 @@ const USE_WEBHOOK = process.env.USE_WEBHOOK === "true";
             });
         }
 
-        await startUserBot();
+        try {
+            await startUserBot();
+        } catch (error) {
+            console.warn("User-bot ishga tushmadi, lekin asosiy bot va skaner ishlashda davom etadi.");
+        }
+
         startHhScanner();
 
         console.log("Monitoring tizimi to‘liq rejimda ishlamoqda");

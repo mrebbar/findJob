@@ -61,9 +61,29 @@ async function checkChannels() {
 
 async function startUserBot() {
     console.log("User-bot ulanmoqda...");
-    await client.connect();
-    console.log("User-bot muvaffaqiyatli ulandi!");
-    setInterval(checkChannels, 30 * 1000);
+
+    try {
+        await client.start();
+        const isAuthorized = await client.isUserAuthorized();
+        if (!isAuthorized) {
+            throw new Error("Telegram sessiyasi avtorizatsiyadan o'tmagan. Iltimos yeni SESSION yarating.");
+        }
+
+        console.log("User-bot muvaffaqiyatli ulandi!");
+        setInterval(checkChannels, 30 * 1000);
+    } catch (error) {
+        const message = error?.message || String(error);
+
+        if (message.includes("AUTH_KEY_DUPLICATED") || message.includes("406")) {
+            console.error("Telegram sessiyasi duplikat bo'lib qoldi yoki eskirgan. Iltimos yangi SESSION yarating:");
+            console.error("1) node generate-session.js");
+            console.error("2) yangi SESSION qiymatini .env faylga joylang");
+        } else {
+            console.error("User-botni ishga tushirishda xatolik:", message);
+        }
+
+        throw error;
+    }
 }
 
 module.exports = {startUserBot};
