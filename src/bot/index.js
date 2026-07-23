@@ -3,6 +3,9 @@ const channelHandler = require("./handlers/channel.handler");
 const keywordHandler = require("./handlers/keyword.handler");
 
 const bot = new Bot(process.env.BOT_TOKEN);
+const STARTED = Symbol.for("findjob.bot.started");
+
+global[STARTED] = global[STARTED] || false;
 const ADMIN_ID = Number(process.env.ADMIN_ID);
 bot.use(session({initial: () => ({step: null})}));
 
@@ -51,4 +54,20 @@ bot.on("message:text", async (ctx) => {
 // Webhook middleware
 bot.use(session({initial: () => ({})}));
 
-module.exports = bot;
+async function startBot(options = {}) {
+    if (global[STARTED]) {
+        console.warn("Bot allaqachon ishga tushgan, ikkinchi nusxa ishga tushmadi.");
+        return;
+    }
+
+    global[STARTED] = true;
+
+    try {
+        await bot.start(options);
+    } catch (error) {
+        global[STARTED] = false;
+        throw error;
+    }
+}
+
+module.exports = { bot, startBot };

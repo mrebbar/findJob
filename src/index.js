@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const storageService = require("./services/storage.service");
-const bot = require("./bot");
+const { bot, startBot } = require("./bot");
 const {startUserBot} = require("./userbot");
 const {startHhScanner} = require("./services/hh.scanner");
 const {startWebhook, startHealthServer} = require("./webhook");
@@ -20,7 +20,7 @@ const USE_WEBHOOK = process.env.USE_WEBHOOK === "true";
         } else {
             console.log(">>> Polling rejimida ishga tushilmoqda...");
             await startHealthServer();
-            bot.start({
+            await startBot({
                 onStart: (botInfo) => {
                     console.log(`Asosiy boshqaruv boti ishga tushdi! (@${botInfo.username})`);
                 }
