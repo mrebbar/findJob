@@ -42,11 +42,25 @@ function createServer({ useWebhook = false } = {}) {
     });
 
     return new Promise((resolve, reject) => {
-        server.listen(port, "0.0.0.0", () => {
-            console.log(`>>> Server portda ishlamoqda: ${port}`);
-            resolve(server);
+        let currentPort = port;
+        const startListening = () => {
+            server.listen(currentPort, "0.0.0.0", () => {
+                console.log(`>>> Server portda ishlamoqda: ${currentPort}`);
+                resolve(server);
+            });
+        };
+
+        server.on("error", (err) => {
+            if (err.code === "EADDRINUSE") {
+                console.warn(`>>> Port ${currentPort} band, keyingi portga o'tilmoqda (${currentPort + 1})...`);
+                currentPort++;
+                startListening();
+            } else {
+                reject(err);
+            }
         });
-        server.on("error", reject);
+
+        startListening();
     });
 }
 
